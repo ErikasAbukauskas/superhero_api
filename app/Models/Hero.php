@@ -11,11 +11,22 @@ class Hero extends Model
 
     protected $fillable = [
         'name',
-        'characters',
-        'image',
+        'character_id',
+        // 'image_id',
         'alignment',
         'height',
         'weight',
         'aliases',
     ];
+
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
+    }
+
+    // public function image()
+    // {
+    //     return $this->belongsTo(Image::class);
+    // }
+
 }

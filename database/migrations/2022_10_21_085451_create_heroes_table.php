@@ -16,8 +16,8 @@ class CreateHeroesTable extends Migration
         Schema::create('heroes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('characters');//????? str dex int ir tt
-            $table->string('image');
+            $table->foreignId('character_id')->constrained('characters')->onDelete('cascade');
+            // $table->foreignId('image_id')->constrained('images')->onDelete('cascade');
             $table->string('alignment');//checkbox good or bad
             $table->string('height');
             $table->string('weight');

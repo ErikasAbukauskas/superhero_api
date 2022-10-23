@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Hero;
 use App\Http\Requests\StoreHeroRequest;
 use App\Http\Requests\UpdateHeroRequest;
+Use App\Http\Resources\HeroResource;
+Use App\Http\Resources\ImageResource;
 
 class HeroController extends Controller
 {
@@ -15,9 +17,13 @@ class HeroController extends Controller
      */
     public function index()
     {
-        $heroes = Hero::all();
 
-        return response()->json([compact('heroes'), 200]);
+        // $heroes = HeroResource::collection(Hero::paginate(10));
+
+        // return response()->json([compact('heroes'), 200]);
+
+        return HeroResource::collection(Hero::paginate(10));
+
 
     }
 
@@ -42,7 +48,12 @@ class HeroController extends Controller
      */
     public function show(Hero $hero)
     {
-        return response()->json([$hero, 404]);
+
+        // $hero = HeroResource::collection(Hero::all());
+
+        // return response()->json([$hero], 200);
+
+        return HeroResource::collection(Hero::where('id', $hero->id)->paginate(10));
 
     }
 
