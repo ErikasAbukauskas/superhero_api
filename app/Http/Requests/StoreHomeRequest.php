@@ -13,7 +13,7 @@ class StoreHomeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,27 @@ class StoreHomeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'image' => 'required|image|mimes:png|max:2048',
+            'name' => 'required|unique:heroes',
+            'character_id' => 'required:powerstat',
+            'alignment' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
+            'aliases' => 'required|unique:heroes',
+
+
+            // 'intelligence' => 'required|integer',
+            // 'strength' => 'required|integer',
+            // 'speed' => 'required|integer',
+            // 'durability' => 'required|integer',
+            // 'power' => 'required|integer',
+            // 'combat' => 'required|integer',
         ];
+
+    }
+
+    public function messages()
+    {
+        return ['character_id.required' =>'The powerstats field is required.'];
     }
 }

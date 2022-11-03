@@ -17,9 +17,9 @@ class HeroResource extends JsonResource
 
         return[
             'id' => $this->id,
+            'image' => $this->image,
             'name' => $this->name,
             'powerstats' => new CharacterResource($this->character),
-            // 'image' => new ImageResource($this->image),
             'alignment' => $this->alignment,
             'height' => number_format($this->height / 100, 2),
             'weight' => $this->weight,

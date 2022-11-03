@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Hero extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
+
 
     protected $fillable = [
+        'image',
         'name',
         'character_id',
-        // 'image_id',
         'alignment',
         'height',
         'weight',
@@ -23,10 +25,5 @@ class Hero extends Model
     {
         return $this->belongsTo(Character::class);
     }
-
-    // public function image()
-    // {
-    //     return $this->belongsTo(Image::class);
-    // }
 
 }

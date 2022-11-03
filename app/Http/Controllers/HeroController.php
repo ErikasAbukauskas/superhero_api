@@ -22,7 +22,7 @@ class HeroController extends Controller
 
         // return response()->json([compact('heroes'), 200]);
 
-        return HeroResource::collection(Hero::paginate(10));
+        return HeroResource::collection(Hero::sortable()->paginate(10));
 
 
     }
@@ -35,7 +35,19 @@ class HeroController extends Controller
      */
     public function store(StoreHeroRequest $request)
     {
-        Hero::create($request->validated());
+
+
+        $file = $request->file('image')->store('public');
+
+        // $file = $request->file('image');
+        // $extension = $file->getClientOriginalExtension();
+        // $filename = time().'.'.$extension;
+        // $file->move('public/image', $filename);
+
+        Hero::create($request->validated() + $file);
+
+
+
 
         return response()->json(['message' => 'Hero created successfully']);
     }
@@ -57,17 +69,6 @@ class HeroController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateHeroRequest  $request
-     * @param  \App\Models\Hero  $hero
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateHeroRequest $request, Hero $hero)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

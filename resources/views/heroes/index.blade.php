@@ -8,14 +8,14 @@
         <table class="table caption-top">
             <thead>
             <tr>
-                {{-- <th scope="col">Image</th> --}}
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
-                <th scope="col">Intelligence</th>
-                <th scope="col">Strength</th>
-                <th scope="col">Speed</th>
-                <th scope="col">Durability</th>
-                <th scope="col">Power</th>
-                <th scope="col">Combat</th>
+                <th scope="col">@sortablelink('character.intelligence','Intelligence')</th>
+                <th scope="col">@sortablelink('character.strength','Strength')</th>
+                <th scope="col">@sortablelink('character.speed','Speed')</th>
+                <th scope="col">@sortablelink('character.durability','Durability')</th>
+                <th scope="col">@sortablelink('character.power','Power')</th>
+                <th scope="col">@sortablelink('character.combat','Combat')</th>
                 <th scope="col">Alignment</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -23,8 +23,8 @@
             <tbody>
             @forelse ( $heroes as $hero)
             <tr>
-                {{-- <td>Mark</td> --}}
-                <td>{{ number_format($hero->height / 100, 2) }} cm</td>
+                <td><img src="{{ asset('images/' .$hero->image) }}" alt=""></td>
+                <td>{{ $hero->name }}</td>
                 <td>{{ $hero->character->intelligence }}</td>
                 <td>{{ $hero->character->strength }}</td>
                 <td>{{ $hero->character->speed }}</td>
@@ -54,8 +54,8 @@
             </tr>
             </tbody>
         </table>
+        {!! $heroes->appends(\Request::except('page'))->render() !!}
     </div>
 </div>
-
 
 @endsection

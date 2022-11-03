@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $heroes = Hero::all();
+        $heroes = Hero::sortable()->paginate(10);
         return view('heroes.index', compact('heroes'));
     }
 
@@ -28,7 +28,9 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('heroes.create');
+        $characters = Character::all();
+
+        return view('heroes.create', compact('characters'));
     }
 
     /**
@@ -39,7 +41,21 @@ class HomeController extends Controller
      */
     public function store(StoreHomeRequest $request)
     {
-        //
+        // Hero::create($request->validated());
+
+        $input = $request->validated();
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
+
+        Hero::create($input);
+
+
+        return redirect()->route('heroes.index');
     }
 
     /**
@@ -48,32 +64,9 @@ class HomeController extends Controller
      * @param  \App\Models\Home  $home
      * @return \Illuminate\Http\Response
      */
-    public function show(Home $home)
+    public function show(Home $home, Hero $hero)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Home  $home
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Home $home)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateHomeRequest  $request
-     * @param  \App\Models\Home  $home
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateHomeRequest $request, Home $home)
-    {
-        //
+        return view('heroes.show', compact('hero'));
     }
 
     /**
